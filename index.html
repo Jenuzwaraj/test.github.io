@@ -1,126 +1,578 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Bite-sized insights in Embedded Systems & IoT</title>
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VEXA Toys — Diecast Photography</title>
+  <meta name="description" content="VEXA Toys — premium diecast photography & reels. Collections, reels, and contact." />
 
+  <!-- Google font (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #ffffff;
+      --card: #f6f7f8;
+      --muted: #6b7280;
+      --accent: #1f2937; /* near-black */
+      --accent-2: #ffb703; /* small accent */
+      --radius: 12px;
+      --max-width: 1200px;
+      --gap: 20px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--accent);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* Container */
+    .wrap{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:28px;
+    }
+
+    /* Header */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 0;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      text-decoration:none;
+      color:var(--accent);
+    }
+    .logo {
+      width:46px;
+      height:46px;
+      background:linear-gradient(135deg,#e6eef8,#dbeef4);
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      color:var(--accent);
+      box-shadow:0 6px 18px rgba(16,24,40,0.06);
+      font-size:18px;
+    }
+    nav a{
+      color:var(--muted);
+      text-decoration:none;
+      margin-left:18px;
+      font-weight:600;
+      font-size:14px;
+    }
+    nav a.cta{
+      margin-left:24px;
+      padding:8px 12px;
+      background:var(--accent-2);
+      color: #111;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:13px;
+    }
+
+    /* Hero */
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:28px;
+      align-items:center;
+      margin:18px 0 36px;
+    }
+    .hero-left h1{
+      margin:0;
+      font-size:34px;
+      letter-spacing:-0.6px;
+    }
+    .hero-left p{
+      color:var(--muted);
+      margin:12px 0 18px;
+    }
+    .hero-cta{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+    }
+    .btn-primary{ background:var(--accent); color:#fff; }
+    .btn-outline{ background:transparent; border:1px solid #e6e7eb; color:var(--accent); }
+
+    /* Right hero image (replace with your hero) */
+    .hero-right{
+      border-radius:14px;
+      overflow:hidden;
+      background:linear-gradient(180deg,#11182710,#f8fafc);
+      box-shadow:0 10px 30px rgba(16,24,40,0.05);
+      min-height:280px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .hero-right img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* Collections filter */
+    .collections{
+      display:flex;
+      gap:12px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+    .chip{
+      padding:8px 12px;
+      background:var(--card);
+      border-radius:999px;
+      font-weight:600;
+      color:var(--muted);
+      cursor:pointer;
+      border:none;
+    }
+    .chip.active{ background:var(--accent); color:#fff; }
+
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:var(--gap);
+      margin-bottom:34px;
+    }
+    .card{
+      background:#fff;
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:0 6px 18px rgba(16,24,40,0.04);
+      transition:transform .18s ease, box-shadow .18s ease;
+      cursor:pointer;
+    }
+    .card:hover{ transform:translateY(-6px); box-shadow:0 14px 40px rgba(16,24,40,0.08); }
+    .card img{ width:100%; height:210px; object-fit:cover; display:block; }
+    .card-body{ padding:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .card-title{ font-weight:700; font-size:15px; margin:0; color:var(--accent); }
+    .card-sub{ color:var(--muted); font-size:13px; margin-top:6px; }
+
+    /* Footer / subscribe */
+    .footer{
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:24px;
+      align-items:start;
+      margin-top:36px;
+      padding-top:28px;
+      border-top:1px solid #f1f2f4;
+    }
+    .subscribe input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #e6e7eb;
+      margin-bottom:10px;
+      font-size:14px;
+    }
+    .subscribe button{
+      padding:10px 12px;
+      border-radius:10px;
+      border:0;
+      background:var(--accent);
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    /* Lightbox modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      background:rgba(0,0,0,0.6);
+      z-index:60;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+    }
+    .modal.show{ display:flex; }
+    .modal-content{
+      width:100%;
+      max-width:980px;
+      border-radius:12px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:0 30px 60px rgba(2,6,23,0.6);
+    }
+    .modal-img{ width:100%; height:620px; object-fit:cover; display:block; }
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{ grid-template-columns:1fr; }
+      .hero-right{ order: -1; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+      .footer{ grid-template-columns:1fr; }
+      .modal-img{ height:420px; }
+    }
+    @media (max-width:640px){
+      .grid{ grid-template-columns: 1fr; }
+      .card img{ height:300px; }
+      header{ padding:6px 0; }
+      nav a{ display:none; }
+      nav a.cta{ display:inline-block; }
+    }
+
+    /* small helper */
+    .muted{ color:var(--muted); font-size:13px; }
+    .center{ text-align:center; }
+  </style>
 </head>
 <body>
+  <div class="wrap">
 
-<!-- HEADER -->
-<header id="home">
-  <h1></h1>
-  <p>Bite-sized insights in Embedded Systems & IoT</p>
-</header>
+    <!-- Header -->
+    <header>
+      <a class="brand" href="#">
+        <div class="logo">V</div>
+        <div>
+          <div style="font-weight:800;">VEXA</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">T O Y S</div>
+        </div>
+      </a>
 
-<!-- NAVIGATION -->
-<nav>
-  <a href="#home">Home</a>
-  <a href="#blog">Blog</a>
-  <a href="#about">About</a>
-  <a href="#contact">Contact</a>
-</nav>
+      <nav>
+        <a href="#gallery">Gallery</a>
+        <a href="#reels">Reels</a>
+        <a href="#about">About</a>
+        <a class="cta" href="#contact">Contact</a>
+      </nav>
+    </header>
 
-<!-- MAIN CONTENT -->
-<div class="container">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-left">
+        <h1 id="hero-heading">Premium Diecast Photography — VEXA Toys</h1>
+        <p>Curated photos & reels of diecast cars. Clean product-style galleries, behind-the-scenes and downloadable reels for social media.</p>
 
-  <!-- BLOG SECTION -->
-  <h2 id="blog">📝 Latest Blog Posts</h2>
-  <div class="blog-grid">
-    <!-- Blog 1 -->
-    <div class="blog-card">
-      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="Yocto Project" />
-      <h3>Yocto Project – Linux Distro</h3>
-      <small>2025-09-22</small>
-      <p>My journey building a custom embedded Linux image using the Yocto Project. Learn how to assemble your own distribution from scratch, optimize boot times, and integrate device drivers.</p>
-      <a href="yocto-project.html">Read more →</a>
-    </div>
-    <!-- Blog 2 -->
-    <div class="blog-card">
-      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="Yocto Project" />
-      <h3>Modbus protocol</h3>
-      <small>2025-10-27</small>
-      <p>This introductory guide covered the core concepts of Modbus — the master-slave model, addressing, and the communication fundamentals that power industrial automation.
-</p>
-      <a href="modbus.html">Read more →</a>
-    </div>
-        <!-- Blog 3  -->
-    <div class="blog-card">
-      <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Coming Soon" />
-      <h3>Coming Soon</h3>
-      <small>Date TBD</small>
-      <p>Details coming soon…</p>
-      <a href="modbus.html">Read more →</a>
-    </div>
-    <!-- Blog 4. -->
-    <div class="blog-card">
-      <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Coming Soon" />
-      <h3>Coming Soon</h3>
-      <small>Date TBD</small>
-      <p>Details coming soon…</p>
-      <a href="#">Read more →</a>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#gallery">Explore Gallery</a>
+          <a class="btn btn-outline" href="#reels">See Reels</a>
+        </div>
+
+        <p style="margin-top:18px;" class="muted">Pro-tip: use the download icon on each reel card to save Instagram-ready clips.</p>
+      </div>
+
+      <div class="hero-right" role="img" aria-label="Vexa Camaro hero photo">
+        <!-- Replace with your hero image -->
+        <img src="assets/hero-camaro.jpg" alt="Vexa Camaro toy photo (replace me)" loading="lazy">
+      </div>
+    </section>
+
+    <!-- Collections -->
+    <section>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <h2 style="margin:0 0 6px;">Collections</h2>
+          <div class="muted">Organized sets to help your followers find the shots they love.</div>
+        </div>
+        <div class="center muted">Showing <strong id="count">9</strong> items</div>
+      </div>
+
+      <div class="collections" role="tablist" aria-label="Collections">
+        <button class="chip active" data-cat="all">All</button>
+        <button class="chip" data-cat="muscle">Muscle</button>
+        <button class="chip" data-cat="super">Supercars</button>
+        <button class="chip" data-cat="vintage">Vintage</button>
+        <button class="chip" data-cat="diorama">Diorama</button>
+      </div>
+
+      <!-- Grid gallery -->
+      <div id="gallery" class="grid" aria-live="polite">
+        <!-- Example cards: replace 'src' with your images -->
+        <article class="card" data-cat="muscle" tabindex="0" aria-label="Camaro - Outdoor shoot">
+          <img src="assets/camaro-1.jpg" alt="Camaro outdoor" loading="lazy">
+          <div class="card-body">
+            <div>
+              <div class="card-title">Camaro — Outdoor</div>
+              <div class="card-sub muted">Muscle | 1/18 scale</div>
+            </div>
+            <div style="text-align:right;">
+              <button aria-label="View Camaro" class="chip view-btn" data-src="assets/camaro-1.jpg">View</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="super" tabindex="0">
+          <img src="assets/lamborghini-1.jpg" alt="Lamborghini" loading="lazy">
+          <div class="card-body">
+            <div>
+              <div class="card-title">Lamborghini — Night</div>
+              <div class="card-sub muted">Supercars | glossy edit</div>
+            </div>
+            <div>
+              <button class="chip view-btn" data-src="assets/lamborghini-1.jpg">View</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="vintage" tabindex="0">
+          <img src="assets/vintage-1.jpg" alt="Vintage car" loading="lazy">
+          <div class="card-body">
+            <div>
+              <div class="card-title">Vintage — Street</div>
+              <div class="card-sub muted">Classic | film tones</div>
+            </div>
+            <div>
+              <button class="chip view-btn" data-src="assets/vintage-1.jpg">View</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- duplicate more cards as needed -->
+        <article class="card" data-cat="diorama"><img src="assets/diorama-1.jpg" alt="diorama" loading="lazy"><div class="card-body"><div><div class="card-title">Diorama — Desert</div><div class="card-sub muted">Diorama | scene</div></div><div><button class="chip view-btn" data-src="assets/diorama-1.jpg">View</button></div></div></article>
+
+        <article class="card" data-cat="muscle"><img src="assets/camaro-2.jpg" alt="camaro 2" loading="lazy"><div class="card-body"><div><div class="card-title">Camaro — Close</div><div class="card-sub muted">Muscle | detail</div></div><div><button class="chip view-btn" data-src="assets/camaro-2.jpg">View</button></div></div></article>
+
+        <article class="card" data-cat="super"><img src="assets/aston-1.jpg" alt="aston" loading="lazy"><div class="card-body"><div><div class="card-title">Aston — Street</div><div class="card-sub muted">Supercars | glossy</div></div><div><button class="chip view-btn" data-src="assets/aston-1.jpg">View</button></div></div></article>
+
+        <article class="card" data-cat="vintage"><img src="assets/vintage-2.jpg" alt="vintage 2" loading="lazy"><div class="card-body"><div><div class="card-title">Classic — Rust</div><div class="card-sub muted">Vintage | matte</div></div><div><button class="chip view-btn" data-src="assets/vintage-2.jpg">View</button></div></div></article>
+
+        <article class="card" data-cat="diorama"><img src="assets/diorama-2.jpg" alt="diorama 2" loading="lazy"><div class="card-body"><div><div class="card-title">Diorama — City</div><div class="card-sub muted">Scene | wide</div></div><div><button class="chip view-btn" data-src="assets/diorama-2.jpg">View</button></div></div></article>
+
+        <article class="card" data-cat="muscle"><img src="assets/camaro-3.jpg" alt="camaro 3" loading="lazy"><div class="card-body"><div><div class="card-title">Camaro — Motion</div><div class="card-sub muted">Muscle | motion blur</div></div><div><button class="chip view-btn" data-src="assets/camaro-3.jpg">View</button></div></div></article>
+      </div>
+    </section>
+
+    <!-- Reels preview -->
+    <section id="reels" style="margin-top:28px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <h2 style="margin:0">Reels & Clips</h2>
+        <div class="muted">Short social clips ready to post</div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:repeat(3,1fr);">
+        <!-- Reel card: replace video poster / link -->
+        <article class="card" style="display:flex;flex-direction:column;">
+          <video src="assets/reel1.mp4" controls playsinline style="width:100%; height:220px; object-fit:cover;"></video>
+          <div class="card-body">
+            <div>
+              <div class="card-title">Camaro Reel</div>
+              <div class="card-sub muted">10s | Instagram-ready</div>
+            </div>
+            <div>
+              <a href="assets/reel1.mp4" download class="chip" style="background:#eaf2ff">Download</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" style="display:flex;flex-direction:column;">
+          <video src="assets/reel2.mp4" controls playsinline style="width:100%; height:220px; object-fit:cover;"></video>
+          <div class="card-body">
+            <div>
+              <div class="card-title">Night Drive</div>
+              <div class="card-sub muted">12s | loop</div>
+            </div>
+            <div><a href="assets/reel2.mp4" download class="chip" style="background:#eaf2ff">Download</a></div>
+          </div>
+        </article>
+
+        <article class="card" style="display:flex;flex-direction:column;">
+          <video src="assets/reel3.mp4" controls playsinline style="width:100%; height:220px; object-fit:cover;"></video>
+          <div class="card-body">
+            <div>
+              <div class="card-title">Mini Drift</div>
+              <div class="card-sub muted">8s | fast cut</div>
+            </div>
+            <div><a href="assets/reel3.mp4" download class="chip" style="background:#eaf2ff">Download</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Footer & contact -->
+    <footer id="contact" class="footer" aria-labelledby="contact-heading">
+      <div>
+        <h3 id="contact-heading">Get in touch</h3>
+        <p class="muted">Want photos for your feed, custom shots, or reels? Send a quick message and we'll reply.</p>
+
+        <form id="contactForm" style="margin-top:12px;max-width:680px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <input name="name" id="name" placeholder="Your name" required>
+            <input name="phone" id="phone" placeholder="Phone (optional)">
+          </div>
+          <input name="email" id="email" type="email" placeholder="Email" required>
+          <textarea id="message" name="message" rows="4" placeholder="Message / brief" style="width:100%;padding:12px;border-radius:10px;border:1px solid #e6e7eb;margin-top:8px;"></textarea>
+
+          <div style="display:flex;gap:10px;margin-top:10px;">
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button type="button" id="whatsappBtn" class="btn btn-outline">Whatsapp</button>
+          </div>
+
+          <div id="formStatus" class="muted" style="margin-top:10px;"></div>
+        </form>
+
+        <div style="margin-top:18px;" class="muted">Follow: <a href="https://instagram.com/yourpage" target="_blank">@vexa.toys</a></div>
+      </div>
+
+      <div class="subscribe">
+        <h4 style="margin-top:0">Subscribe for updates</h4>
+        <p class="muted">Get new photos and reels delivered to your inbox.</p>
+        <input id="subscribeEmail" type="email" placeholder="Email address">
+        <button id="subscribeBtn">Subscribe</button>
+
+        <div style="margin-top:18px;" class="muted">© <strong>VEXA Toys</strong> — Built with care</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content" role="document">
+      <img id="modalImg" class="modal-img" alt="Preview">
     </div>
   </div>
 
-  <!-- ABOUT SECTION -->
-  <div class="about" id="about">
-    <h2>👨‍💻 About Me</h2>
-    <p>I'm <strong>Jenuzwaraj</strong>, an Embedded & IoT Engineer with a deep passion for building real-time systems, optimizing performance, and solving complex hardware-software integration challenges.</p>
-    <p>With hands-on experience in microcontroller programming, embedded Linux (Yocto, Buildroot), and industrial IoT systems, I enjoy turning raw boards into production-ready smart devices. My journey began with bare-metal coding and has since evolved into architecting scalable embedded solutions for smart factories and connected products.</p>
-    <p>This blog is my public lab notebook — sharing real projects, personal experiments, tutorials, and open source ideas. Whether you're a beginner trying to set up your first Linux build or a fellow engineer pushing the limits of embedded hardware, you'll find something here.</p>
-    <ul>
-      <li>Step-by-step guides on embedded Linux development</li>
-      <li>IoT project builds with schematics and source code</li>
-      <li>Boot-time optimization and real-time debugging tips</li>
-      <li>Open-source tools and custom driver tutorials</li>
-      <li>Behind-the-scenes notes from actual engineering work</li>
-    </ul>
-  </div>
+  <script>
+    /* ===== Gallery filter & count ===== */
+    const chips = document.querySelectorAll('.chip[data-cat]');
+    const cards = Array.from(document.querySelectorAll('.grid .card'));
+    const countEl = document.getElementById('count');
 
-  <!-- CONTACT SECTION -->
-  <section id="contact" class="contact">
-    <h2>📬 Get in Touch</h2>
-    <p>I'd love to hear from you! Fill out the form below and I'll get back to you soon.</p>
+    function filter(cat){
+      let visible = 0;
+      cards.forEach(c=>{
+        const cardCat = c.dataset.cat || 'all';
+        if(cat === 'all' || cardCat === cat){
+          c.style.display = '';
+          visible++;
+        } else {
+          c.style.display = 'none';
+        }
+      });
+      countEl.textContent = visible;
+      // set active chip style
+      chips.forEach(ch=>ch.classList.toggle('active', ch.dataset.cat===cat));
+    }
+    // initial
+    filter('all');
 
-    <form class="contact-form" action="https://formspree.io/f/xzzjdovn" method="POST">
-      <label class="sr-only" for="cname">Name</label>
-      <input id="cname" name="name" type="text" placeholder="Your name" required>
+    chips.forEach(ch=>{
+      ch.addEventListener('click', ()=> filter(ch.dataset.cat));
+    });
 
-      <label class="sr-only" for="cemail">Email</label>
-      <input id="cemail" name="email" type="email" placeholder="Your email" required>
+    /* ===== Lightbox (view images) ===== */
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const viewBtns = document.querySelectorAll('.view-btn');
 
-      <label class="sr-only" for="cmsg">Message</label>
-      <textarea id="cmsg" name="message" rows="5" placeholder="Your message…" required></textarea>
+    viewBtns.forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        const src = btn.dataset.src || btn.getAttribute('data-src');
+        modalImg.src = src;
+        modal.setAttribute('aria-hidden','false');
+        modal.classList.add('show');
+      });
+    });
+    // close on backdrop click or Esc
+    modal.addEventListener('click', (ev)=>{
+      if(ev.target === modal || ev.target === modalImg){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); modalImg.src=''; }
+    });
+    document.addEventListener('keydown', (ev)=>{ if(ev.key==='Escape'){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); modalImg.src=''; } });
 
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
+    /* ===== Contact form: example Supabase POST (client-side) =====
+       Replace SUPABASE_URL and SUPABASE_ANON_KEY with your project values.
+       NOTE: client-side keys are public by design for supabase anon usage.
+       If you prefer, create a simple server endpoint on Render and post there instead.
+    */
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
 
-</div>
+    contactForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      formStatus.textContent = 'Sending...';
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        message: document.getElementById('message').value.trim(),
+        created_at: new Date().toISOString()
+      };
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-icons">
-    <a href="mailto:jenuzwaraj@gmail.com" target="_blank" aria-label="Email">
-      <i class="fas fa-envelope"></i>
-    </a>
-    <a href="https://www.instagram.com/jenu_zwaraj?igsh=NGJhNXF3OWdtajU0" target="_blank" aria-label="Instagram">
-      <i class="fab fa-instagram"></i>
-    </a>
-    <a href=" https://www.linkedin.com/in/jenu-swaraj-3ab8b7284 " target="_blank" aria-label="LinkedIn">
-      <i class="fab fa-linkedin"></i>
-    </a>
-  </div>
-  <p>© 2025 All rights reserved.</p>
-</footer>
+      try {
+        /* ---------- OPTION 1: Direct to Supabase (no backend) ----------
+           1) Create a Supabase project.
+           2) Create a table `customers` with fields: name, phone, email, message, created_at
+           3) Grab your SUPABASE_URL and SUPABASE_ANON_KEY and paste below.
+        */
+        const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co"; // <- replace
+        const SUPABASE_ANON_KEY = "YOUR_ANON_KEY";               // <- replace
 
+        // small guard: if the user didn't replace keys, skip and show example response:
+        if (!SUPABASE_URL.includes("supabase") || SUPABASE_ANON_KEY === "YOUR_ANON_KEY") {
+          // fallback: pretend success and log payload (so user can test without keys)
+          console.log("Contact payload (not sent):", payload);
+          formStatus.textContent = 'Saved locally (replace Supabase keys to enable real saving).';
+          contactForm.reset();
+          return;
+        }
 
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/customers`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if(res.ok){
+          formStatus.textContent = 'Thanks — message saved. We will reply soon.';
+          contactForm.reset();
+        } else {
+          const text = await res.text();
+          console.error('Supabase error', text);
+          formStatus.textContent = 'Error saving message — check console.';
+        }
+      } catch(err){
+        console.error(err);
+        formStatus.textContent = 'Network error — try again later.';
+      }
+    });
+
+    /* ===== Simple subscribe button handler (same idea) ===== */
+    document.getElementById('subscribeBtn').addEventListener('click', async ()=>{
+      const em = document.getElementById('subscribeEmail').value.trim();
+      if(!em) return alert('Enter an email');
+      // You can reuse the same Supabase REST table 'subscribers' or customers with a tag
+      // This demo just shows a local success message
+      document.getElementById('subscribeBtn').textContent = 'Subscribed ✓';
+      setTimeout(()=> document.getElementById('subscribeBtn').textContent = 'Subscribe', 2000);
+      console.log('subscribe:', em);
+    });
+
+    /* ===== Whatsapp quick message (prefill) ===== */
+    document.getElementById('whatsappBtn').addEventListener('click', ()=>{
+      const phone = encodeURIComponent(document.getElementById('phone').value.trim() || '');
+      const name = encodeURIComponent(document.getElementById('name').value.trim() || 'New customer');
+      const text = encodeURIComponent(`Hi, I'm ${name} and I'd like to enquire about a shoot.`);
+      // change to your WhatsApp number (international format without +)
+      const waNumber = '919999999999';
+      window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
+    });
+  </script>
 </body>
 </html>
