@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VEXA Toys — Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    :root {
+      --bg: #0b0e13;
+      --card: #141820;
+      --accent: #5b7fff;
+      --accent2: #00e0ff;
+      --text: #f2f5f7;
+      --muted: #8b93a1;
+      --radius: 14px;
+      --blur: rgba(255,255,255,0.05);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin:0;
+      font-family: Inter, system-ui;
+      background: var(--bg);
+      color: var(--text);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      padding:20px;
+    }
+
+    /* Card */
+    .login-card {
+      width:100%;
+      max-width:380px;
+      background: var(--card);
+      padding:34px;
+      border-radius: var(--radius);
+      box-shadow: 0 0 60px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+      animation: fadeIn 0.6s ease-out;
+      position:relative;
+    }
+
+    @keyframes fadeIn {
+      from { opacity:0; transform: translateY(12px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+
+    .logo-box {
+      width:70px;
+      height:70px;
+      border-radius:16px;
+      background: linear-gradient(135deg, #232832, #0e1117);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin:0 auto 22px;
+      box-shadow:0 0 20px rgba(91,127,255,0.3);
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .logo-box span {
+      font-size:32px;
+      font-weight:700;
+      color:var(--accent);
+    }
+
+    h2 {
+      margin:0;
+      text-align:center;
+      font-size:26px;
+      font-weight:700;
+    }
+
+    p {
+      text-align:center;
+      font-size:14px;
+      color:var(--muted);
+      margin-top:6px;
+      margin-bottom:26px;
+    }
+
+    input {
+      width:100%;
+      padding:14px;
+      margin-bottom:14px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,0.07);
+      background:#0d1117;
+      color:var(--text);
+      font-size:14px;
+      outline:none;
+      transition:0.2s;
+    }
+
+    input:focus {
+      border-color:var(--accent);
+      box-shadow:0 0 12px rgba(91,127,255,0.3);
+    }
+
+    .btn {
+      width:100%;
+      padding:14px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: var(--radius);
+      border:none;
+      color:#fff;
+      font-size:15px;
+      font-weight:700;
+      margin-top:6px;
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    .btn:hover {
+      box-shadow:0 0 22px rgba(0,224,255,0.35);
+      transform:translateY(-2px);
+    }
+
+    .links {
+      margin-top:20px;
+      text-align:center;
+      font-size:14px;
+    }
+
+    .links a {
+      color:var(--accent2);
+      text-decoration:none;
+    }
+
+    #status {
+      text-align:center;
+      margin-top:12px;
+      font-size:14px;
+      color: var(--accent2);
+      min-height:20px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="login-card">
+    <div class="logo-box">
+      <span>V</span>
+    </div>
+
+    <h2>Welcome Back</h2>
+    <p>Login to continue</p>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button class="btn" onclick="login()">Login</button>
+
+    <div id="status"></div>
+
+    <div class="links">
+      <a href="signup.html">Create an account</a> • 
+      <a href="reset.html">Forgot Password?</a>
+    </div>
+  </div>
+
+  <script>
+    const supabase = supabase.createClient(
+      "YOUR_SUPABASE_URL",
+      "YOUR_SUPABASE_ANON_KEY"
+    );
+
+    async function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const statusEl = document.getElementById("status");
+
+      statusEl.innerHTML = "Checking...";
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        statusEl.style.color = "#ff6b6b";
+        statusEl.innerHTML = error.message;
+      } else {
+        statusEl.style.color = "#00e0ff";
+        statusEl.innerHTML = "Logged in! Redirecting...";
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 800);
+      }
+    }
+  </script>
+
+</body>
+</html>
