@@ -126,13 +126,14 @@
     }
 
     /* GRID */
-    .grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
-      gap:18px;
-      padding:0 22px;
-      margin-bottom:20px;
-    }
+   .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 3 items per row on desktop */
+  gap: 22px;
+  padding: 0 22px;
+  margin-bottom: 20px;
+}
+
     .card {
       background:#fff;
       border-radius:var(--radius);
@@ -155,6 +156,19 @@
       font-weight:700;
       text-align:center;
     }
+/* Mobile view: 1 item per row */
+@media (max-width: 600px){
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Tablet view: 2 items per row */
+@media (min-width: 601px) and (max-width: 1000px){
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
     /* FOOTER */
     footer {
