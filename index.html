@@ -1,578 +1,247 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VEXA Toys — Diecast Photography</title>
-  <meta name="description" content="VEXA Toys — premium diecast photography & reels. Collections, reels, and contact." />
-
-  <!-- Google font (optional) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>VEXA Toys — Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
-    :root{
-      --bg: #ffffff;
-      --card: #f6f7f8;
-      --muted: #6b7280;
-      --accent: #1f2937; /* near-black */
-      --accent-2: #ffb703; /* small accent */
-      --radius: 12px;
-      --max-width: 1200px;
-      --gap: 20px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:var(--bg);
-      color:var(--accent);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    :root {
+      --bg: #0b0e13;
+      --card: #141820;
+      --accent: #5b7fff;
+      --accent2: #00e0ff;
+      --text: #f2f5f7;
+      --muted: #8b93a1;
+      --radius: 14px;
     }
 
-    /* Container */
-    .wrap{
-      max-width:var(--max-width);
-      margin:0 auto;
-      padding:28px;
+    * { box-sizing: border-box; margin:0; padding:0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui;
     }
 
-    /* Header */
-    header{
+    /* NAVBAR */
+    nav {
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:12px;
-      padding:12px 0;
-    }
-    .brand{
-      display:flex;
-      gap:12px;
       align-items:center;
-      text-decoration:none;
-      color:var(--accent);
-    }
-    .logo {
-      width:46px;
-      height:46px;
-      background:linear-gradient(135deg,#e6eef8,#dbeef4);
-      border-radius:10px;
-      display:grid;
-      place-items:center;
-      font-weight:700;
-      color:var(--accent);
-      box-shadow:0 6px 18px rgba(16,24,40,0.06);
-      font-size:18px;
-    }
-    nav a{
-      color:var(--muted);
-      text-decoration:none;
-      margin-left:18px;
-      font-weight:600;
-      font-size:14px;
-    }
-    nav a.cta{
-      margin-left:24px;
-      padding:8px 12px;
-      background:var(--accent-2);
-      color: #111;
-      border-radius:8px;
-      text-decoration:none;
-      font-weight:700;
-      font-size:13px;
+      padding:22px 40px;
+      background:#0c1017;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      position:sticky;
+      top:0;
+      z-index:10;
     }
 
-    /* Hero */
-    .hero{
-      display:grid;
-      grid-template-columns: 1fr 360px;
-      gap:28px;
-      align-items:center;
-      margin:18px 0 36px;
-    }
-    .hero-left h1{
-      margin:0;
-      font-size:34px;
-      letter-spacing:-0.6px;
-    }
-    .hero-left p{
-      color:var(--muted);
-      margin:12px 0 18px;
-    }
-    .hero-cta{
+    .brand {
       display:flex;
+      align-items:center;
       gap:12px;
-      flex-wrap:wrap;
-    }
-    .btn{
-      display:inline-block;
-      padding:10px 14px;
-      border-radius:10px;
+      font-weight:700;
       text-decoration:none;
-      font-weight:600;
-      font-size:14px;
+      color: var(--text);
     }
-    .btn-primary{ background:var(--accent); color:#fff; }
-    .btn-outline{ background:transparent; border:1px solid #e6e7eb; color:var(--accent); }
 
-    /* Right hero image (replace with your hero) */
-    .hero-right{
-      border-radius:14px;
-      overflow:hidden;
-      background:linear-gradient(180deg,#11182710,#f8fafc);
-      box-shadow:0 10px 30px rgba(16,24,40,0.05);
-      min-height:280px;
+    .logo-box {
+      width:42px; height:42px;
+      border-radius:12px;
+      background: linear-gradient(135deg, #232832, #0e1117);
       display:flex;
-      align-items:center;
       justify-content:center;
+      align-items:center;
+      color: var(--accent);
+      font-weight:700;
+      box-shadow: 0 0 10px rgba(91,127,255,0.3);
     }
-    .hero-right img{ width:100%; height:100%; object-fit:cover; display:block; }
 
-    /* Collections filter */
-    .collections{
-      display:flex;
-      gap:12px;
-      margin-bottom:20px;
-      flex-wrap:wrap;
-    }
-    .chip{
-      padding:8px 12px;
-      background:var(--card);
-      border-radius:999px;
+    .nav-links a {
+      margin-left:26px;
+      text-decoration:none;
+      color: var(--muted);
       font-weight:600;
-      color:var(--muted);
-      cursor:pointer;
-      border:none;
-    }
-    .chip.active{ background:var(--accent); color:#fff; }
-
-    /* Grid */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:var(--gap);
-      margin-bottom:34px;
-    }
-    .card{
-      background:#fff;
-      border-radius:var(--radius);
-      overflow:hidden;
-      box-shadow:0 6px 18px rgba(16,24,40,0.04);
-      transition:transform .18s ease, box-shadow .18s ease;
-      cursor:pointer;
-    }
-    .card:hover{ transform:translateY(-6px); box-shadow:0 14px 40px rgba(16,24,40,0.08); }
-    .card img{ width:100%; height:210px; object-fit:cover; display:block; }
-    .card-body{ padding:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
-    .card-title{ font-weight:700; font-size:15px; margin:0; color:var(--accent); }
-    .card-sub{ color:var(--muted); font-size:13px; margin-top:6px; }
-
-    /* Footer / subscribe */
-    .footer{
-      display:grid;
-      grid-template-columns: 1fr 320px;
-      gap:24px;
-      align-items:start;
-      margin-top:36px;
-      padding-top:28px;
-      border-top:1px solid #f1f2f4;
-    }
-    .subscribe input{
-      width:100%;
-      padding:12px 14px;
-      border-radius:10px;
-      border:1px solid #e6e7eb;
-      margin-bottom:10px;
       font-size:14px;
     }
-    .subscribe button{
-      padding:10px 12px;
-      border-radius:10px;
-      border:0;
-      background:var(--accent);
+
+    .login-btn {
+      padding:10px 18px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: var(--radius);
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      font-size:14px;
+      transition:0.2s;
+      margin-left:26px;
+    }
+
+    .login-btn:hover {
+      box-shadow:0 0 20px rgba(0,224,255,0.35);
+      transform:translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:80px 40px 60px;
+      gap:40px;
+      flex-wrap:wrap;
+    }
+
+    .hero-text {
+      flex:1;
+      min-width:300px;
+    }
+
+    .hero-text h1 {
+      font-size:46px;
+      line-height:1.2;
+      margin-bottom:14px;
+      background: linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .hero-text p {
+      color: var(--muted);
+      font-size:16px;
+      margin-bottom:24px;
+    }
+
+    .hero-btn {
+      padding:14px 22px;
+      background: var(--accent);
+      border-radius:var(--radius);
+      text-decoration:none;
       color:#fff;
       font-weight:700;
-      cursor:pointer;
+      display:inline-block;
+      transition:0.2s;
     }
 
-    /* Lightbox modal */
-    .modal{
-      position:fixed;
-      inset:0;
-      display:none;
-      background:rgba(0,0,0,0.6);
-      z-index:60;
-      align-items:center;
-      justify-content:center;
-      padding:32px;
+    .hero-btn:hover {
+      box-shadow:0 0 16px rgba(91,127,255,0.3);
+      transform: translateY(-2px);
     }
-    .modal.show{ display:flex; }
-    .modal-content{
-      width:100%;
-      max-width:980px;
-      border-radius:12px;
+
+    .hero-img {
+      flex:1;
+      min-width:300px;
+      border-radius:20px;
       overflow:hidden;
-      background:#fff;
-      box-shadow:0 30px 60px rgba(2,6,23,0.6);
-    }
-    .modal-img{ width:100%; height:620px; object-fit:cover; display:block; }
-
-    /* Responsive */
-    @media (max-width:1000px){
-      .hero{ grid-template-columns:1fr; }
-      .hero-right{ order: -1; }
-      .grid{ grid-template-columns: repeat(2, 1fr); }
-      .footer{ grid-template-columns:1fr; }
-      .modal-img{ height:420px; }
-    }
-    @media (max-width:640px){
-      .grid{ grid-template-columns: 1fr; }
-      .card img{ height:300px; }
-      header{ padding:6px 0; }
-      nav a{ display:none; }
-      nav a.cta{ display:inline-block; }
+      box-shadow:0 0 30px rgba(0,0,0,0.4);
     }
 
-    /* small helper */
-    .muted{ color:var(--muted); font-size:13px; }
-    .center{ text-align:center; }
+    .hero-img img {
+      width:100%;
+      display:block;
+      object-fit:cover;
+    }
+
+    /* GALLERY PREVIEW */
+    .section {
+      padding:40px;
+    }
+
+    .section h2 {
+      font-size:28px;
+      margin-bottom:10px;
+    }
+
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+      gap:20px;
+      margin-top:20px;
+    }
+
+    .card {
+      background: var(--card);
+      padding:14px;
+      border-radius: var(--radius);
+      box-shadow:0 0 20px rgba(0,0,0,0.3);
+      transition:0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow:0 0 30px rgba(0,224,255,0.2);
+    }
+
+    .card img {
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      border-radius: var(--radius);
+    }
+
+    .footer {
+      text-align:center;
+      padding:40px 20px;
+      color: var(--muted);
+      border-top:1px solid rgba(255,255,255,0.05);
+      margin-top:40px;
+    }
+
   </style>
 </head>
+
 <body>
-  <div class="wrap">
 
-    <!-- Header -->
-    <header>
-      <a class="brand" href="#">
-        <div class="logo">V</div>
-        <div>
-          <div style="font-weight:800;">VEXA</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px;">T O Y S</div>
-        </div>
-      </a>
+  <!-- NAV -->
+  <nav>
+    <a class="brand" href="#">
+      <div class="logo-box">V</div>
+      VEXA TOYS
+    </a>
 
-      <nav>
-        <a href="#gallery">Gallery</a>
-        <a href="#reels">Reels</a>
-        <a href="#about">About</a>
-        <a class="cta" href="#contact">Contact</a>
-      </nav>
-    </header>
+    <div class="nav-links">
+      <a href="#gallery">Gallery</a>
+      <a href="#reels">Reels</a>
+      <a href="#contact">Contact</a>
 
-    <!-- Hero -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="hero-left">
-        <h1 id="hero-heading">Premium Diecast Photography — VEXA Toys</h1>
-        <p>Curated photos & reels of diecast cars. Clean product-style galleries, behind-the-scenes and downloadable reels for social media.</p>
-
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="#gallery">Explore Gallery</a>
-          <a class="btn btn-outline" href="#reels">See Reels</a>
-        </div>
-
-        <p style="margin-top:18px;" class="muted">Pro-tip: use the download icon on each reel card to save Instagram-ready clips.</p>
-      </div>
-
-      <div class="hero-right" role="img" aria-label="Vexa Camaro hero photo">
-        <!-- Replace with your hero image -->
-        <img src="assets/hero-camaro.jpg" alt="Vexa Camaro toy photo (replace me)" loading="lazy">
-      </div>
-    </section>
-
-    <!-- Collections -->
-    <section>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-        <div>
-          <h2 style="margin:0 0 6px;">Collections</h2>
-          <div class="muted">Organized sets to help your followers find the shots they love.</div>
-        </div>
-        <div class="center muted">Showing <strong id="count">9</strong> items</div>
-      </div>
-
-      <div class="collections" role="tablist" aria-label="Collections">
-        <button class="chip active" data-cat="all">All</button>
-        <button class="chip" data-cat="muscle">Muscle</button>
-        <button class="chip" data-cat="super">Supercars</button>
-        <button class="chip" data-cat="vintage">Vintage</button>
-        <button class="chip" data-cat="diorama">Diorama</button>
-      </div>
-
-      <!-- Grid gallery -->
-      <div id="gallery" class="grid" aria-live="polite">
-        <!-- Example cards: replace 'src' with your images -->
-        <article class="card" data-cat="muscle" tabindex="0" aria-label="Camaro - Outdoor shoot">
-          <img src="assets/camaro-1.jpg" alt="Camaro outdoor" loading="lazy">
-          <div class="card-body">
-            <div>
-              <div class="card-title">Camaro — Outdoor</div>
-              <div class="card-sub muted">Muscle | 1/18 scale</div>
-            </div>
-            <div style="text-align:right;">
-              <button aria-label="View Camaro" class="chip view-btn" data-src="assets/camaro-1.jpg">View</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" data-cat="super" tabindex="0">
-          <img src="assets/lamborghini-1.jpg" alt="Lamborghini" loading="lazy">
-          <div class="card-body">
-            <div>
-              <div class="card-title">Lamborghini — Night</div>
-              <div class="card-sub muted">Supercars | glossy edit</div>
-            </div>
-            <div>
-              <button class="chip view-btn" data-src="assets/lamborghini-1.jpg">View</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" data-cat="vintage" tabindex="0">
-          <img src="assets/vintage-1.jpg" alt="Vintage car" loading="lazy">
-          <div class="card-body">
-            <div>
-              <div class="card-title">Vintage — Street</div>
-              <div class="card-sub muted">Classic | film tones</div>
-            </div>
-            <div>
-              <button class="chip view-btn" data-src="assets/vintage-1.jpg">View</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- duplicate more cards as needed -->
-        <article class="card" data-cat="diorama"><img src="assets/diorama-1.jpg" alt="diorama" loading="lazy"><div class="card-body"><div><div class="card-title">Diorama — Desert</div><div class="card-sub muted">Diorama | scene</div></div><div><button class="chip view-btn" data-src="assets/diorama-1.jpg">View</button></div></div></article>
-
-        <article class="card" data-cat="muscle"><img src="assets/camaro-2.jpg" alt="camaro 2" loading="lazy"><div class="card-body"><div><div class="card-title">Camaro — Close</div><div class="card-sub muted">Muscle | detail</div></div><div><button class="chip view-btn" data-src="assets/camaro-2.jpg">View</button></div></div></article>
-
-        <article class="card" data-cat="super"><img src="assets/aston-1.jpg" alt="aston" loading="lazy"><div class="card-body"><div><div class="card-title">Aston — Street</div><div class="card-sub muted">Supercars | glossy</div></div><div><button class="chip view-btn" data-src="assets/aston-1.jpg">View</button></div></div></article>
-
-        <article class="card" data-cat="vintage"><img src="assets/vintage-2.jpg" alt="vintage 2" loading="lazy"><div class="card-body"><div><div class="card-title">Classic — Rust</div><div class="card-sub muted">Vintage | matte</div></div><div><button class="chip view-btn" data-src="assets/vintage-2.jpg">View</button></div></div></article>
-
-        <article class="card" data-cat="diorama"><img src="assets/diorama-2.jpg" alt="diorama 2" loading="lazy"><div class="card-body"><div><div class="card-title">Diorama — City</div><div class="card-sub muted">Scene | wide</div></div><div><button class="chip view-btn" data-src="assets/diorama-2.jpg">View</button></div></div></article>
-
-        <article class="card" data-cat="muscle"><img src="assets/camaro-3.jpg" alt="camaro 3" loading="lazy"><div class="card-body"><div><div class="card-title">Camaro — Motion</div><div class="card-sub muted">Muscle | motion blur</div></div><div><button class="chip view-btn" data-src="assets/camaro-3.jpg">View</button></div></div></article>
-      </div>
-    </section>
-
-    <!-- Reels preview -->
-    <section id="reels" style="margin-top:28px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <h2 style="margin:0">Reels & Clips</h2>
-        <div class="muted">Short social clips ready to post</div>
-      </div>
-
-      <div class="grid" style="grid-template-columns:repeat(3,1fr);">
-        <!-- Reel card: replace video poster / link -->
-        <article class="card" style="display:flex;flex-direction:column;">
-          <video src="assets/reel1.mp4" controls playsinline style="width:100%; height:220px; object-fit:cover;"></video>
-          <div class="card-body">
-            <div>
-              <div class="card-title">Camaro Reel</div>
-              <div class="card-sub muted">10s | Instagram-ready</div>
-            </div>
-            <div>
-              <a href="assets/reel1.mp4" download class="chip" style="background:#eaf2ff">Download</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" style="display:flex;flex-direction:column;">
-          <video src="assets/reel2.mp4" controls playsinline style="width:100%; height:220px; object-fit:cover;"></video>
-          <div class="card-body">
-            <div>
-              <div class="card-title">Night Drive</div>
-              <div class="card-sub muted">12s | loop</div>
-            </div>
-            <div><a href="assets/reel2.mp4" download class="chip" style="background:#eaf2ff">Download</a></div>
-          </div>
-        </article>
-
-        <article class="card" style="display:flex;flex-direction:column;">
-          <video src="assets/reel3.mp4" controls playsinline style="width:100%; height:220px; object-fit:cover;"></video>
-          <div class="card-body">
-            <div>
-              <div class="card-title">Mini Drift</div>
-              <div class="card-sub muted">8s | fast cut</div>
-            </div>
-            <div><a href="assets/reel3.mp4" download class="chip" style="background:#eaf2ff">Download</a></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Footer & contact -->
-    <footer id="contact" class="footer" aria-labelledby="contact-heading">
-      <div>
-        <h3 id="contact-heading">Get in touch</h3>
-        <p class="muted">Want photos for your feed, custom shots, or reels? Send a quick message and we'll reply.</p>
-
-        <form id="contactForm" style="margin-top:12px;max-width:680px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <input name="name" id="name" placeholder="Your name" required>
-            <input name="phone" id="phone" placeholder="Phone (optional)">
-          </div>
-          <input name="email" id="email" type="email" placeholder="Email" required>
-          <textarea id="message" name="message" rows="4" placeholder="Message / brief" style="width:100%;padding:12px;border-radius:10px;border:1px solid #e6e7eb;margin-top:8px;"></textarea>
-
-          <div style="display:flex;gap:10px;margin-top:10px;">
-            <button type="submit" class="btn btn-primary">Send Message</button>
-            <button type="button" id="whatsappBtn" class="btn btn-outline">Whatsapp</button>
-          </div>
-
-          <div id="formStatus" class="muted" style="margin-top:10px;"></div>
-        </form>
-
-        <div style="margin-top:18px;" class="muted">Follow: <a href="https://instagram.com/yourpage" target="_blank">@vexa.toys</a></div>
-      </div>
-
-      <div class="subscribe">
-        <h4 style="margin-top:0">Subscribe for updates</h4>
-        <p class="muted">Get new photos and reels delivered to your inbox.</p>
-        <input id="subscribeEmail" type="email" placeholder="Email address">
-        <button id="subscribeBtn">Subscribe</button>
-
-        <div style="margin-top:18px;" class="muted">© <strong>VEXA Toys</strong> — Built with care</div>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Lightbox modal -->
-  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-content" role="document">
-      <img id="modalImg" class="modal-img" alt="Preview">
+      <!-- Login button -->
+      <a class="login-btn" href="login.html">Login</a>
     </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Premium Diecast Photography</h1>
+      <p>Explore high-end toy car shots, cinematic reels, and custom edits crafted by VEXA Toys.</p>
+
+      <a class="hero-btn" href="#gallery">Explore Gallery</a>
+    </div>
+
+    <div class="hero-img">
+      <img src="assets/hero-car.jpg" alt="Hero Toy Car Image">
+    </div>
+  </section>
+
+  <!-- GALLERY PREVIEW -->
+  <section id="gallery" class="section">
+    <h2>Latest Shots</h2>
+
+    <div class="grid">
+      <div class="card"><img src="assets/sample1.jpg" alt=""></div>
+      <div class="card"><img src="assets/sample2.jpg" alt=""></div>
+      <div class="card"><img src="assets/sample3.jpg" alt=""></div>
+      <div class="card"><img src="assets/sample4.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    © 2025 VEXA TOYS — Crafted for Diecast Lovers
   </div>
 
-  <script>
-    /* ===== Gallery filter & count ===== */
-    const chips = document.querySelectorAll('.chip[data-cat]');
-    const cards = Array.from(document.querySelectorAll('.grid .card'));
-    const countEl = document.getElementById('count');
-
-    function filter(cat){
-      let visible = 0;
-      cards.forEach(c=>{
-        const cardCat = c.dataset.cat || 'all';
-        if(cat === 'all' || cardCat === cat){
-          c.style.display = '';
-          visible++;
-        } else {
-          c.style.display = 'none';
-        }
-      });
-      countEl.textContent = visible;
-      // set active chip style
-      chips.forEach(ch=>ch.classList.toggle('active', ch.dataset.cat===cat));
-    }
-    // initial
-    filter('all');
-
-    chips.forEach(ch=>{
-      ch.addEventListener('click', ()=> filter(ch.dataset.cat));
-    });
-
-    /* ===== Lightbox (view images) ===== */
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modalImg');
-    const viewBtns = document.querySelectorAll('.view-btn');
-
-    viewBtns.forEach(btn=>{
-      btn.addEventListener('click', e=>{
-        const src = btn.dataset.src || btn.getAttribute('data-src');
-        modalImg.src = src;
-        modal.setAttribute('aria-hidden','false');
-        modal.classList.add('show');
-      });
-    });
-    // close on backdrop click or Esc
-    modal.addEventListener('click', (ev)=>{
-      if(ev.target === modal || ev.target === modalImg){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); modalImg.src=''; }
-    });
-    document.addEventListener('keydown', (ev)=>{ if(ev.key==='Escape'){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); modalImg.src=''; } });
-
-    /* ===== Contact form: example Supabase POST (client-side) =====
-       Replace SUPABASE_URL and SUPABASE_ANON_KEY with your project values.
-       NOTE: client-side keys are public by design for supabase anon usage.
-       If you prefer, create a simple server endpoint on Render and post there instead.
-    */
-    const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
-
-    contactForm.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      formStatus.textContent = 'Sending...';
-      const payload = {
-        name: document.getElementById('name').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        message: document.getElementById('message').value.trim(),
-        created_at: new Date().toISOString()
-      };
-
-      try {
-        /* ---------- OPTION 1: Direct to Supabase (no backend) ----------
-           1) Create a Supabase project.
-           2) Create a table `customers` with fields: name, phone, email, message, created_at
-           3) Grab your SUPABASE_URL and SUPABASE_ANON_KEY and paste below.
-        */
-        const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co"; // <- replace
-        const SUPABASE_ANON_KEY = "YOUR_ANON_KEY";               // <- replace
-
-        // small guard: if the user didn't replace keys, skip and show example response:
-        if (!SUPABASE_URL.includes("supabase") || SUPABASE_ANON_KEY === "YOUR_ANON_KEY") {
-          // fallback: pretend success and log payload (so user can test without keys)
-          console.log("Contact payload (not sent):", payload);
-          formStatus.textContent = 'Saved locally (replace Supabase keys to enable real saving).';
-          contactForm.reset();
-          return;
-        }
-
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/customers`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if(res.ok){
-          formStatus.textContent = 'Thanks — message saved. We will reply soon.';
-          contactForm.reset();
-        } else {
-          const text = await res.text();
-          console.error('Supabase error', text);
-          formStatus.textContent = 'Error saving message — check console.';
-        }
-      } catch(err){
-        console.error(err);
-        formStatus.textContent = 'Network error — try again later.';
-      }
-    });
-
-    /* ===== Simple subscribe button handler (same idea) ===== */
-    document.getElementById('subscribeBtn').addEventListener('click', async ()=>{
-      const em = document.getElementById('subscribeEmail').value.trim();
-      if(!em) return alert('Enter an email');
-      // You can reuse the same Supabase REST table 'subscribers' or customers with a tag
-      // This demo just shows a local success message
-      document.getElementById('subscribeBtn').textContent = 'Subscribed ✓';
-      setTimeout(()=> document.getElementById('subscribeBtn').textContent = 'Subscribe', 2000);
-      console.log('subscribe:', em);
-    });
-
-    /* ===== Whatsapp quick message (prefill) ===== */
-    document.getElementById('whatsappBtn').addEventListener('click', ()=>{
-      const phone = encodeURIComponent(document.getElementById('phone').value.trim() || '');
-      const name = encodeURIComponent(document.getElementById('name').value.trim() || 'New customer');
-      const text = encodeURIComponent(`Hi, I'm ${name} and I'd like to enquire about a shoot.`);
-      // change to your WhatsApp number (international format without +)
-      const waNumber = '919999999999';
-      window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
-    });
-  </script>
 </body>
 </html>
