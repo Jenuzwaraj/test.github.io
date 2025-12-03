@@ -2,246 +2,306 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>VEXA Toys — Home</title>
+  <title>Vexa Toys — Explore Joy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+  <!-- Google Icons + Font -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
+  <style>
     :root {
-      --bg: #0b0e13;
-      --card: #141820;
-      --accent: #5b7fff;
-      --accent2: #00e0ff;
-      --text: #f2f5f7;
-      --muted: #8b93a1;
-      --radius: 14px;
+      --blue: #3b82f6;
+      --yellow: #facc15;
+      --red: #ef4444;
+      --green: #22c55e;
+
+      --bg: #ffffff;
+      --text: #222;
+      --muted: #666;
+      --radius: 18px;
     }
 
-    * { box-sizing: border-box; margin:0; padding:0; }
-
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
+      font-family: 'Nunito', sans-serif;
       background: var(--bg);
       color: var(--text);
-      font-family: Inter, system-ui;
     }
 
-    /* NAVBAR */
-    nav {
+    /* HEADER */
+    header {
       display:flex;
       justify-content:space-between;
       align-items:center;
-      padding:22px 40px;
-      background:#0c1017;
-      border-bottom:1px solid rgba(255,255,255,0.05);
+      padding:18px 22px;
+      background:#fff;
+      border-bottom:1px solid #eee;
       position:sticky;
       top:0;
-      z-index:10;
+      z-index:50;
     }
-
-    .brand {
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:700;
-      text-decoration:none;
-      color: var(--text);
-    }
-
     .logo-box {
-      width:42px; height:42px;
-      border-radius:12px;
-      background: linear-gradient(135deg, #232832, #0e1117);
       display:flex;
-      justify-content:center;
       align-items:center;
-      color: var(--accent);
-      font-weight:700;
-      box-shadow: 0 0 10px rgba(91,127,255,0.3);
+      gap:10px;
     }
-
-    .nav-links a {
-      margin-left:26px;
-      text-decoration:none;
-      color: var(--muted);
-      font-weight:600;
-      font-size:14px;
+    .logo-box img {
+      width:48px;
+      height:48px;
+      border-radius:50%;
     }
-
-    .login-btn {
-      padding:10px 18px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius: var(--radius);
-      color:#fff;
-      text-decoration:none;
-      font-weight:700;
-      font-size:14px;
+    .logo-name {
+      font-size:24px;
+      font-weight:800;
+      color: var(--blue);
+    }
+    .icons {
+      display:flex;
+      gap:16px;
+    }
+    .icons span {
+      font-size:26px;
+      cursor:pointer;
+      color:#444;
       transition:0.2s;
-      margin-left:26px;
+    }
+    .icons span:hover {
+      color:var(--blue);
+      transform:scale(1.1);
     }
 
-    .login-btn:hover {
-      box-shadow:0 0 20px rgba(0,224,255,0.35);
-      transform:translateY(-1px);
-    }
-
-    /* HERO */
+    /* HERO BANNER */
     .hero {
+      width:100%;
+      max-width:1300px;
+      height:auto;
+      margin:22px auto 10px;
+      border-radius:var(--radius);
+      overflow:hidden;
       display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:80px 40px 60px;
-      gap:40px;
       flex-wrap:wrap;
+      justify-content:space-between;
+      padding:24px;
+      background:linear-gradient(90deg,#dbeafe,#fef9c3,#fee2e2);
     }
 
     .hero-text {
-      flex:1;
-      min-width:300px;
+      max-width:460px;
+      padding:10px;
     }
-
     .hero-text h1 {
-      font-size:46px;
+      font-size:34px;
+      font-weight:800;
+      color:#111;
       line-height:1.2;
-      margin-bottom:14px;
-      background: linear-gradient(90deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
     }
-
     .hero-text p {
-      color: var(--muted);
+      margin-top:12px;
       font-size:16px;
-      margin-bottom:24px;
+      color: var(--muted);
     }
-
     .hero-btn {
-      padding:14px 22px;
-      background: var(--accent);
-      border-radius:var(--radius);
-      text-decoration:none;
-      color:#fff;
-      font-weight:700;
+      margin-top:20px;
       display:inline-block;
-      transition:0.2s;
+      padding:14px 22px;
+      background:var(--blue);
+      color:#fff;
+      border-radius:var(--radius);
+      font-weight:700;
+      text-decoration:none;
+    }
+    .hero img {
+      width:380px;
+      height:auto;
+      object-fit:contain;
     }
 
-    .hero-btn:hover {
-      box-shadow:0 0 16px rgba(91,127,255,0.3);
-      transform: translateY(-2px);
+    /* SECTION TITLES */
+    h2 {
+      margin:30px 22px 12px;
+      font-size:22px;
+      font-weight:800;
+      color:#222;
     }
 
-    .hero-img {
-      flex:1;
-      min-width:300px;
-      border-radius:20px;
-      overflow:hidden;
-      box-shadow:0 0 30px rgba(0,0,0,0.4);
-    }
-
-    .hero-img img {
-      width:100%;
-      display:block;
-      object-fit:cover;
-    }
-
-    /* GALLERY PREVIEW */
-    .section {
-      padding:40px;
-    }
-
-    .section h2 {
-      font-size:28px;
-      margin-bottom:10px;
-    }
-
+    /* GRID */
     .grid {
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
-      gap:20px;
-      margin-top:20px;
+      grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
+      gap:18px;
+      padding:0 22px;
+      margin-bottom:20px;
+    }
+    .card {
+      background:#fff;
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:0 4px 14px rgba(0,0,0,0.08);
+      transition:0.2s;
+    }
+    .card:hover {
+      transform:translateY(-4px);
+      box-shadow:0 6px 22px rgba(0,0,0,0.12);
+    }
+    .card img {
+      width:100%;
+      height:180px;
+      object-fit:cover;
+    }
+    .card-title {
+      padding:10px;
+      font-size:16px;
+      font-weight:700;
+      text-align:center;
     }
 
-    .card {
-      background: var(--card);
-      padding:14px;
-      border-radius: var(--radius);
-      box-shadow:0 0 20px rgba(0,0,0,0.3);
+    /* FOOTER */
+    footer {
+      padding:32px 22px;
+      text-align:center;
+      background:#fafafa;
+      border-top:1px solid #eee;
+    }
+    .socials {
+      margin-top:10px;
+      display:flex;
+      justify-content:center;
+      gap:16px;
+    }
+    .socials img {
+      width:30px;
+      height:30px;
+      cursor:pointer;
       transition:0.2s;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow:0 0 30px rgba(0,224,255,0.2);
+    /* MOBILE */
+    @media (max-width:770px){
+      .hero { padding:18px; text-align:center; }
+      .hero img { width:100%; margin-top:22px; }
+      .hero-text { max-width:100%; }
+      .icons span { font-size:24px; }
     }
-
-    .card img {
-      width:100%;
-      height:200px;
-      object-fit:cover;
-      border-radius: var(--radius);
-    }
-
-    .footer {
-      text-align:center;
-      padding:40px 20px;
-      color: var(--muted);
-      border-top:1px solid rgba(255,255,255,0.05);
-      margin-top:40px;
-    }
-
   </style>
 </head>
 
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a class="brand" href="#">
-      <div class="logo-box">V</div>
-      VEXA TOYS
-    </a>
-
-    <div class="nav-links">
-      <a href="#gallery">Gallery</a>
-      <a href="#reels">Reels</a>
-      <a href="#contact">Contact</a>
-
-      <!-- Login button -->
-      <a class="login-btn" href="login.html">Login</a>
+  <!-- HEADER -->
+  <header>
+    <div class="logo-box">
+      <img src="https://i.imgur.com/FpCLxvj.png" alt="Vexa Logo">
+      <span class="logo-name">Vexa Toys</span>
     </div>
-  </nav>
 
-  <!-- HERO -->
+    <div class="icons">
+      <span class="material-icons-outlined">search</span>
+      <span class="material-icons-outlined" onclick="location.href='login.html'">person</span>
+      <span class="material-icons-outlined">favorite_border</span>
+      <span class="material-icons-outlined">shopping_cart</span>
+    </div>
+  </header>
+
+  <!-- HERO BANNER -->
   <section class="hero">
     <div class="hero-text">
-      <h1>Premium Diecast Photography</h1>
-      <p>Explore high-end toy car shots, cinematic reels, and custom edits crafted by VEXA Toys.</p>
+      <h1>Discover Fun & Joy for Every Child</h1>
+      <p>Explore our beautiful collection of toys — safe, colorful, and exciting for all ages.</p>
 
-      <a class="hero-btn" href="#gallery">Explore Gallery</a>
+      <a class="hero-btn" href="#new">Shop New Arrivals</a>
     </div>
 
-    <div class="hero-img">
-      <img src="assets/hero-car.jpg" alt="Hero Toy Car Image">
-    </div>
+    <img src="https://images.pexels.com/photos/3661193/pexels-photo-3661193.jpeg?auto=compress&cs=tinysrgb&w=800"
+         alt="Colorful Toys Hero">
   </section>
 
-  <!-- GALLERY PREVIEW -->
-  <section id="gallery" class="section">
-    <h2>Latest Shots</h2>
+  <!-- NEW ARRIVALS -->
+<h2 id="new">NEW ARRIVALS</h2>
 
-    <div class="grid">
-      <div class="card"><img src="assets/sample1.jpg" alt=""></div>
-      <div class="card"><img src="assets/sample2.jpg" alt=""></div>
-      <div class="card"><img src="assets/sample3.jpg" alt=""></div>
-      <div class="card"><img src="assets/sample4.jpg" alt=""></div>
-    </div>
-  </section>
+<div class="grid">
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/3661350/pexels-photo-3661350.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Cute Plush Bear</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/207983/pexels-photo-207983.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Colorful Toy Blocks</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/45921/pexels-photo-45921.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Mini Toy Car</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/3661429/pexels-photo-3661429.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Stacking Rings Toy</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/3933020/pexels-photo-3933020.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Soft Baby Rattle</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/45921/pexels-photo-45921.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Wooden Train Toy</div>
+  </div>
+
+</div>
+
+  <!-- TRENDING -->
+<h2>TRENDING NOW</h2>
+
+<div class="grid">
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Educational Puzzle</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/3661195/pexels-photo-3661195.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Baby Play Set</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/1648374/pexels-photo-1648374.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Kids Train Set</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/681118/pexels-photo-681118.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Stuffed Pink Bunny</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Toy Building Bricks</div>
+  </div>
+
+  <div class="card">
+    <img src="https://images.pexels.com/photos/681118/pexels-photo-681118.jpeg?auto=compress&cs=tinysrgb&w=800">
+    <div class="card-title">Play-Dough Kit</div>
+  </div>
+
+</div>
 
   <!-- FOOTER -->
-  <div class="footer">
-    © 2025 VEXA TOYS — Crafted for Diecast Lovers
-  </div>
+  <footer>
+    <p>Stay Connected</p>
+
+    <div class="socials">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384014.png" alt="LinkedIn">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+    </div>
+
+    <p style="margin-top:18px; color:#777;">© 2025 Vexa Toys — All Rights Reserved</p>
+  </footer>
 
 </body>
 </html>
