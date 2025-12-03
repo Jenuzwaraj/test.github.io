@@ -126,13 +126,14 @@
     }
 
     /* GRID */
-   .grid {
+ .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);  /* 3 items per row on desktop */
+  grid-template-columns: repeat(3, 1fr); /* Desktop → 3 items */
   gap: 22px;
   padding: 0 22px;
   margin-bottom: 20px;
 }
+
 
     .card {
       background:#fff;
@@ -185,6 +186,13 @@
     }
 
     /* MOBILE */
+/* Mobile: 2 items per row */
+@media (max-width: 700px){
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
     @media (max-width:770px){
       .hero { padding:18px; text-align:center; }
       .hero img { width:100%; margin-top:22px; }
