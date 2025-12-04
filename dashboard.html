@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Dashboard — Vexa Toys</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --card:#fff;
+      --muted:#6b7280;
+      --accent:#3b82f6;
+      --radius:14px;
+      --gap:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto;
+      margin:0;
+      background:#f6f8fb;
+      color:#111;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    header{
+      background:linear-gradient(90deg,#ffffff,#f8fafc);
+      padding:12px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px solid #eee;
+      position:sticky; top:0; z-index:20;
+    }
+    .brand{ display:flex; gap:12px; align-items:center; }
+    .brand img{ width:44px; height:44px; border-radius:10px; }
+    .brand h1{ font-size:18px; margin:0; color:var(--accent); }
+
+    .nav-actions{ display:flex; gap:10px; align-items:center; }
+    .btn {
+      background:var(--accent);
+      color:white;
+      border:0;
+      padding:8px 12px;
+      border-radius:10px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .ghost { background:transparent; border:1px solid #ddd; color:var(--muted); padding:8px 10px; border-radius:10px; cursor:pointer; }
+
+    .container{ max-width:1100px; margin:22px auto; padding:0 18px; display:grid; grid-template-columns:320px 1fr; gap:22px; }
+
+    /* sidebar */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:0 6px 20px rgba(16,24,40,0.04);
+    }
+    .profile-photo{
+      width:86px; height:86px; border-radius:50%; background:#f0f3ff; display:block; margin:0 auto 12px; object-fit:cover; }
+    .h3{ font-size:16px; margin:8px 0 6px; font-weight:700; text-align:center; }
+    .muted{ color:var(--muted); font-size:14px; text-align:center; margin-bottom:12px; }
+
+    .field{ margin-bottom:10px; }
+    input[type="text"]{
+      width:100%; padding:10px; border-radius:10px; border:1px solid #e6e7eb; background:#fff;
+    }
+    .small { font-size:13px; color:var(--muted); margin-top:8px; display:block; text-align:center; }
+
+    /* main area */
+    .main-grid{ display:grid; gap:18px; }
+    .section-title{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+    .section-title h2{ margin:0; font-size:18px; font-weight:800; }
+    .list-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+    .product-card{
+      background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(16,24,40,0.04);
+      display:flex; flex-direction:column;
+    }
+    .product-card img{ width:100%; height:140px; object-fit:cover; display:block; }
+    .product-body{ padding:10px; display:flex; gap:6px; align-items:center; justify-content:space-between; }
+    .product-title{ font-weight:700; font-size:14px; }
+    .product-sub{ color:var(--muted); font-size:13px; }
+
+    /* responsive */
+    @media (max-width:1000px){
+      .container{ grid-template-columns:1fr; }
+      .list-grid{ grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:560px){
+      .list-grid{ grid-template-columns:repeat(1,1fr); }
+      header{ padding:10px; }
+      .brand h1{ font-size:16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <img src="https://i.imgur.com/FpCLxvj.png" alt="Vexa Logo">
+      <h1>Vexa Toys</h1>
+    </div>
+
+    <div class="nav-actions">
+      <button class="ghost" onclick="location.href='index.html'">Home</button>
+      <button id="logoutBtn" class="btn">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- LEFT: Profile -->
+    <aside class="card" id="profileCard" aria-live="polite">
+      <img id="avatar" class="profile-photo" src="https://images.pexels.com/photos/3661350/pexels-photo-3661350.jpeg?auto=compress&cs=tinysrgb&w=400" alt="avatar">
+      <div class="h3" id="displayName">Loading...</div>
+      <div class="muted" id="emailText">—</div>
+
+      <div style="margin-top:12px;">
+        <label class="small">Display name</label>
+        <div class="field"><input id="nameInput" type="text" placeholder="Your name"></div>
+        <button class="btn" id="saveNameBtn">Save name</button>
+        <div id="nameStatus" class="small"></div>
+      </div>
+
+      <hr style="margin:14px 0; border:none; border-top:1px solid #f1f2f4;" />
+
+      <div style="text-align:center;">
+        <button class="ghost" onclick="location.href='login.html'">View account settings</button>
+      </div>
+    </aside>
+
+    <!-- RIGHT: Main -->
+    <section class="main-grid">
+
+      <!-- Welcome / quick stats -->
+      <div class="card" id="welcomeCard">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-weight:800;font-size:18px;" id="welcomeTitle">Welcome back</div>
+            <div class="muted" id="welcomeSub">Here’s your activity</div>
+          </div>
+
+          <div style="text-align:right">
+            <div style="font-size:12px;color:var(--muted)">Member since</div>
+            <div id="memberSince" style="font-weight:700">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Favorites / Saved -->
+      <div class="card">
+        <div class="section-title">
+          <h2>Saved toys</h2>
+          <div class="muted" id="savedCount">0</div>
+        </div>
+
+        <div id="savedGrid" class="list-grid" aria-live="polite">
+          <!-- product cards inserted here -->
+        </div>
+
+        <div id="noSaved" class="small" style="margin-top:12px; display:none;">No saved toys yet. Browse the <a href="index.html">store</a>.</div>
+      </div>
+
+      <!-- Recent orders / placeholder -->
+      <div class="card">
+        <div class="section-title">
+          <h2>Quick actions</h2>
+        </div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" onclick="location.href='index.html'">Shop toys</button>
+          <button class="ghost" onclick="alert('Feature coming soon')">Orders (coming)</button>
+          <button class="ghost" onclick="alert('Feature coming soon')">Wishlist</button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    // ======== CONFIGURE SUPABASE ========
+    const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";   // <-- replace
+    const SUPABASE_ANON_KEY = "YOUR_ANON_KEY";                 // <-- replace
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ======== UTILS ========
+    function showStatus(el, msg, color="black", timeout=2500){
+      el.textContent = msg;
+      el.style.color = color;
+      if(timeout) setTimeout(()=>{ if(el.textContent===msg) el.textContent = '' }, timeout);
+    }
+
+    // ======== CHECK AUTH ========
+    async function protectPage(){
+      const { data } = await supabase.auth.getUser();
+      const user = data?.user;
+      if(!user){
+        // Not logged in
+        window.location.href = "login.html";
+        return null;
+      }
+      return user;
+    }
+
+    // ======== LOAD PROFILE ========
+    async function loadProfile(){
+      const user = await protectPage();
+      if(!user) return;
+
+      // basic profile from auth
+      const displayNameEl = document.getElementById("displayName");
+      const emailEl = document.getElementById("emailText");
+      const nameInput = document.getElementById("nameInput");
+      const memberSince = document.getElementById("memberSince");
+
+      displayNameEl.textContent = user.user_metadata?.full_name || user.email.split('@')[0];
+      emailEl.textContent = user.email;
+      nameInput.value = user.user_metadata?.full_name || '';
+
+      const created = new Date(user.created_at || Date.now());
+      memberSince.textContent = created.toLocaleDateString();
+
+      // Attempt to load extended profile from "users" table (optional)
+      try {
+        const { data: rows, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', user.id)
+          .limit(1)
+          .maybeSingle();
+
+        if(error){ console.warn("users table fetch error", error); }
+        if(rows){
+          // If you store name/email in users table prefer that
+          if(rows.name) {
+            displayNameEl.textContent = rows.name;
+            nameInput.value = rows.name;
+          }
+          if(rows.avatar_url) {
+            document.getElementById('avatar').src = rows.avatar_url;
+          }
+        }
+      } catch(e){ console.error(e); }
+    }
+
+    // ======== SAVE DISPLAY NAME ========
+    document.getElementById('saveNameBtn').addEventListener('click', async ()=>{
+      const nameEl = document.getElementById('nameInput');
+      const statusEl = document.getElementById('nameStatus');
+      const name = nameEl.value.trim();
+      if(!name){ showStatus(statusEl, "Enter a name", "red"); return; }
+      showStatus(statusEl, "Saving...", "black", 0);
+
+      const { data: userData } = await supabase.auth.getUser();
+      const user = userData?.user;
+      if(!user){ window.location.href='login.html'; return; }
+
+      // 2 choices: update auth.user_metadata (via updateUser) and upsert into users table
+      try {
+        // update auth metadata
+        const { error: updErr } = await supabase.auth.updateUser({ data: { full_name: name }});
+        if(updErr){ console.warn("meta update error", updErr); }
+
+        // upsert into users table
+        const { data, error } = await supabase
+          .from('users')
+          .upsert({ id: user.id, email: user.email, name: name, updated_at: new Date().toISOString() }, { returning: "minimal" });
+
+        if(error){
+          showStatus(statusEl, "Save failed", "red");
+          console.error(error);
+        } else {
+          showStatus(statusEl, "Saved ✓", "green");
+          document.getElementById('displayName').textContent = name;
+        }
+      } catch(e){
+        console.error(e);
+        showStatus(statusEl, "Error", "red");
+      }
+    });
+
+    // ======== LOAD SAVED / FAVORITES ========
+    // Assumes you have:
+    // products table: id, title, image_url, price, etc.
+    // favorites table: id, user_id (uuid), product_id (ref)
+    async function loadFavorites(){
+      const { data: u } = await supabase.auth.getUser();
+      const user = u?.user;
+      if(!user) return;
+
+      // Example: join favorites -> products
+      // Supabase JS: use .select with foreign key selection if you used a foreign key relationship
+      // Here we assume favorites.product_id references products.id and we've enabled RLS appropriately.
+      try {
+        const { data, error } = await supabase
+          .from('favorites')
+          .select('id, product_id, products(id,title,image_url,price)')
+          .eq('user_id', user.id);
+
+        const grid = document.getElementById('savedGrid');
+        const savedCount = document.getElementById('savedCount');
+        grid.innerHTML = '';
+
+        if(error){
+          console.warn("favorites fetch error", error);
+        }
+
+        if(!data || data.length === 0){
+          document.getElementById('noSaved').style.display = 'block';
+          savedCount.textContent = '0';
+          return;
+        }
+        document.getElementById('noSaved').style.display = 'none';
+        savedCount.textContent = String(data.length);
+
+        data.forEach(row => {
+          const p = row.products || row.product; // adapt depending on your relationship naming
+          const card = document.createElement('article');
+          card.className = 'product-card';
+          card.innerHTML = `
+            <img src="${p?.image_url || 'https://images.pexels.com/photos/3661350/pexels-photo-3661350.jpeg?auto=compress&cs=tinysrgb&w=800'}" alt="${escapeHtml(p?.title||'Toy')}">
+            <div class="product-body">
+              <div>
+                <div class="product-title">${escapeHtml(p?.title || 'Untitled')}</div>
+                <div class="product-sub">₹ ${p?.price ?? '--'}</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <button class="ghost" style="padding:6px 8px;font-size:12px;" onclick="viewProduct('${p?.id}')">View</button>
+                <button class="ghost" style="padding:6px 8px;font-size:12px;" onclick="removeFavorite('${row.id}', this)">Remove</button>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+      } catch(err){
+        console.error(err);
+      }
+    }
+
+    // ======== Remove favorite helper ========
+    async function removeFavorite(favId, btn){
+      if(!confirm('Remove this item from saved?')) return;
+      btn.disabled = true;
+      const { error } = await supabase.from('favorites').delete().eq('id', favId);
+      btn.disabled = false;
+      if(error){ alert('Could not remove'); console.error(error); return; }
+      // reload
+      loadFavorites();
+    }
+
+    // ======== view product (simple) ========
+    function viewProduct(productId){
+      // if you have a product page: location.href = `product.html?id=${productId}`;
+      alert('Open product page for id: ' + productId);
+    }
+
+    // ======== Logout ========
+    document.getElementById('logoutBtn').addEventListener('click', async ()=>{
+      await supabase.auth.signOut();
+      window.location.href = "login.html";
+    });
+
+    // ======== Simple HTML escape ========
+    function escapeHtml(s=''){
+      return String(s).replace(/[&<>"']/g, function(m){ return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;' })[m]; });
+    }
+
+    // ======== INIT ========
+    (async function init(){
+      // Protect and load
+      const u = await protectPage();
+      if(!u) return;
+      await loadProfile();
+      await loadFavorites();
+
+      // Optionally subscribe to auth changes (session expire etc.)
+      supabase.auth.onAuthStateChange((event, session) => {
+        if(event === 'SIGNED_OUT') window.location.href = 'login.html';
+      });
+    })();
+  </script>
+</body>
+</html>
