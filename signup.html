@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up — Vexa Toys</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google Fonts + Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --blue: #3b82f6;
+      --yellow: #facc15;
+      --red: #ef4444;
+      --green: #22c55e;
+
+      --bg: #ffffff;
+      --card: #f8fafc;
+      --text: #111;
+      --muted: #666;
+      --radius: 18px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family:'Nunito', sans-serif;
+      background:linear-gradient(135deg,#dbeafe,#fef9c3,#fee2e2);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+
+    .signup-box {
+      width:100%;
+      max-width:380px;
+      background:#fff;
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:0 0 28px rgba(0,0,0,0.12);
+      animation:pop 0.5s ease;
+    }
+
+    @keyframes pop {
+      0% { opacity:0; transform:scale(0.9); }
+      100% { opacity:1; transform:scale(1); }
+    }
+
+    .logo {
+      text-align:center;
+      margin-bottom:14px;
+    }
+    .logo img {
+      width:70px;
+      height:70px;
+      border-radius:50%;
+    }
+
+    h2 {
+      text-align:center;
+      font-size:26px;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+    p {
+      text-align:center;
+      color:var(--muted);
+      margin-bottom:20px;
+    }
+
+    input {
+      width:100%;
+      padding:14px;
+      margin-bottom:14px;
+      border-radius:var(--radius);
+      border:1px solid #ddd;
+      font-size:15px;
+      background:#fafafa;
+      transition:0.3s;
+    }
+
+    input:focus {
+      border-color:var(--blue);
+      box-shadow:0 0 0 3px rgba(59,130,246,0.3);
+      outline:none;
+    }
+
+    .btn {
+      width:100%;
+      padding:14px;
+      background:var(--green);
+      border:none;
+      color:#fff;
+      font-size:16px;
+      font-weight:800;
+      border-radius:var(--radius);
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    .btn:hover {
+      background:#16a34a;
+      transform:translateY(-2px);
+    }
+
+    .links {
+      margin-top:16px;
+      text-align:center;
+      font-size:14px;
+    }
+    .links a {
+      color:var(--blue);
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    #status {
+      text-align:center;
+      margin-top:10px;
+      font-size:14px;
+      min-height:20px;
+    }
+
+    @media (max-width:500px){
+      .signup-box { padding:22px; }
+      h2 { font-size:22px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="signup-box">
+
+    <div class="logo">
+      <img src="https://i.imgur.com/FpCLxvj.png" alt="Logo">
+    </div>
+
+    <h2>Create Account</h2>
+    <p>Join Vexa Toys</p>
+
+    <input id="name" type="text" placeholder="Full Name">
+    <input id="email" type="email" placeholder="Email" autocomplete="email">
+    <input id="password" type="password" placeholder="Password" autocomplete="new-password">
+
+    <button class="btn" onclick="signup()">Create Account</button>
+
+    <div id="status"></div>
+
+    <div class="links">
+      <p>Already have an account?
+        <a href="login.html">Login</a>
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    const supabaseClient = supabase.createClient(
+      "https://byntriknayhhucqkkwvb.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnRyaWtuYXloaHVjcWtrd3ZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4NDE1ODAsImV4cCI6MjA4MDQxNzU4MH0.1vz11HvPkKj8C1XYttzUEXfPzTPu1rdAv7j7kiRJq24"
+    );
+
+    async function signup(){
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const status = document.getElementById("status");
+
+      if(!name || !email || !password){
+        status.style.color = "red";
+        status.innerHTML = "All fields are required!";
+        return;
+      }
+
+      status.style.color = "black";
+      status.innerHTML = "Creating account...";
+
+      // Create auth user
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password
+      });
+
+      if(error){
+        status.style.color = "red";
+        status.innerHTML = error.message;
+        return;
+      }
+
+      // Insert user into custom table (optional)
+      await supabaseClient.from("users").insert({
+        name: name,
+        email: email
+      });
+
+      status.style.color = "green";
+      status.innerHTML = "Signup successful! Redirecting to login...";
+
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>
